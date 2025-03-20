@@ -8,12 +8,14 @@
   </head>
   <body>
   <div class = "container mt-5">
-  <h1>Lista 5 Exercicio 1</h1>
+  <h1>Lista 5 Exercicio 2</h1>
     
-    <form action="exer1.php" method="POST">
+    <form action="exer2.php" method="POST">
         <?php for($i=0;$i<5;$i++): ?>
             <input type="text" name="nome[]" placeholder="Nome"/>
-            <input type="number" name="tel[]" placeholder="Telefone"/>
+            <input type="number" name="nota1[]" placeholder="Nota_1"/>
+            <input type="number" name="nota2[]" placeholder="Nota_2"/>
+            <input type="number" name="nota3[]" placeholder="Nota_3"/>
             <br/>
         <?php endfor; ?>
             
@@ -24,19 +26,22 @@
     <?php
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         try{
-            $a = array();
+            $aluno = array();
             for($i=0;$i<5;$i++){
                 $nome = $_POST['nome'][$i];
-                $tel = $_POST['tel'][$i];
-                if(!isset($a[$nome])&& !in_array($tel, $a)){ //isset verifica se a variavel foi iniciada
-                    //in_array verifica se o valor existe no array
-                    $a[$nome] = $tel;
-                }
+                $nota1 = $_POST['nota1'][$i];
+                $nota2 = $_POST['nota2'][$i];
+                $nota3 = $_POST['nota3'][$i];
+                $media =($nota1+$nota2+$nota3) /3;
+                // Adiciona ao array associativo com o nome como chave
+                $aluno[$nome]=$media;
             }
-            ksort($a); //ordena o array pela chave
-            foreach ($a as $nome => $tel){ //percorre o array
-                echo"$nome - $tel <br>";
+            arsort($aluno); //Ordena o array pela média em ordem decrescente
+            echo"<h2>Alunos e médias</h2>";
+            foreach ($aluno as $nome => $media){
+                echo"$nome: ". number_format($media,2)."<br>";
             }
+
                                                     
         }catch(Exception $e){
             echo $e->getMessage();

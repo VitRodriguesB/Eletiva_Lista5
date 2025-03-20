@@ -8,12 +8,13 @@
   </head>
   <body>
   <div class = "container mt-5">
-  <h1>Lista 5 Exercicio 1</h1>
+  <h1>Lista 5 Exercicio 2</h1>
     
-    <form action="exer1.php" method="POST">
+    <form action="exer3.php" method="POST">
         <?php for($i=0;$i<5;$i++): ?>
-            <input type="text" name="nome[]" placeholder="Nome"/>
-            <input type="number" name="tel[]" placeholder="Telefone"/>
+            <input type="number" name="cod[]" placeholder="cod"/>
+            <input type="text" name="nome[]" placeholder="nome"/>
+            <input type="number" name="preco[]" placeholder="preco"/>
             <br/>
         <?php endfor; ?>
             
@@ -24,18 +25,21 @@
     <?php
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         try{
-            $a = array();
+            $produto = array();
+            $desconto=0;
             for($i=0;$i<5;$i++){
+                $codigo = $_POST['cod'][$i];
                 $nome = $_POST['nome'][$i];
-                $tel = $_POST['tel'][$i];
-                if(!isset($a[$nome])&& !in_array($tel, $a)){ //isset verifica se a variavel foi iniciada
-                    //in_array verifica se o valor existe no array
-                    $a[$nome] = $tel;
+                $preco = $_POST['preco'][$i];
+                if($preco > 100){
+                    $desconto = $preco - ($preco * (0.1));
+                    $preco = $desconto;
                 }
+                $produto[$codigo]=['nome'=>$nome,'preco'=>$preco];
             }
-            ksort($a); //ordena o array pela chave
-            foreach ($a as $nome => $tel){ //percorre o array
-                echo"$nome - $tel <br>";
+            uasort($produto,fn($a,$b) => strcmp($a['nome'], $b['nome']) );
+            foreach ($produto as $codigo => $dados) {
+                echo"$dados[nome] - R$ $dados[preco]<br>";
             }
                                                     
         }catch(Exception $e){

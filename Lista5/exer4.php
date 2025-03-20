@@ -8,12 +8,12 @@
   </head>
   <body>
   <div class = "container mt-5">
-  <h1>Lista 5 Exercicio 1</h1>
+  <h1>Lista 5 Exercicio 2</h1>
     
-    <form action="exer1.php" method="POST">
+    <form action="exer4.php" method="POST">
         <?php for($i=0;$i<5;$i++): ?>
-            <input type="text" name="nome[]" placeholder="Nome"/>
-            <input type="number" name="tel[]" placeholder="Telefone"/>
+            <input type="text" name="nome[]" placeholder="nome"/>
+            <input type="number" name="preco[]" placeholder="preco"/>
             <br/>
         <?php endfor; ?>
             
@@ -24,20 +24,19 @@
     <?php
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         try{
-            $a = array();
+            $itens = array();
+            $imposto = 0.0;
             for($i=0;$i<5;$i++){
                 $nome = $_POST['nome'][$i];
-                $tel = $_POST['tel'][$i];
-                if(!isset($a[$nome])&& !in_array($tel, $a)){ //isset verifica se a variavel foi iniciada
-                    //in_array verifica se o valor existe no array
-                    $a[$nome] = $tel;
-                }
+                $preco = $_POST['preco'][$i];
+                $imposto = $preco * 1.25;
+                $preco = $imposto;
+                $itens[$nome]=$preco;
             }
-            ksort($a); //ordena o array pela chave
-            foreach ($a as $nome => $tel){ //percorre o array
-                echo"$nome - $tel <br>";
-            }
-                                                    
+            asort($itens); //Ordena o array pela média em ordem decrescente
+            foreach ($itens as $nome => $preco) {
+                echo"$nome - R$ $preco<br>";
+            }                            
         }catch(Exception $e){
             echo $e->getMessage();
         }
