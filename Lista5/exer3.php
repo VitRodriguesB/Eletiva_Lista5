@@ -37,7 +37,7 @@
                 }
                 $produto[$codigo]=['nome'=>$nome,'preco'=>$preco];
             }
-            uasort($produto,fn($a,$b) => strcmp($a['nome'], $b['nome']) );
+            uasort($produto,fn($a,$b) => strcmp($a['nome'], $b['nome']) ); //Ordena o array pela média em ordem decrescente
             foreach ($produto as $codigo => $dados) {
                 echo"$dados[nome] - R$ $dados[preco]<br>";
             }
