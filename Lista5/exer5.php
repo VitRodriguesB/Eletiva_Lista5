@@ -12,10 +12,10 @@
     <div class="container mt-5">
         <h1>Lista 5 Exercicio 5</h1>
 
-        <form action="exer4.php" method="POST">
+        <form action="exer5.php" method="POST">
             <?php for ($i = 0; $i < 5; $i++): ?>
-                <input type="text" name="Titulo[]" placeholder="titulo" />
-                <input type="number" name="Quantidade[]" placeholder="quant" />
+                <input type="text" name="titulo[]" placeholder="titulo" />
+                <input type="number" name="quant[]" placeholder="quantidade" />
                 <br />
             <?php endfor; ?>
 
@@ -34,7 +34,7 @@
                 }
                 Ksort($livros);
                 echo "<h2>Lista de livros</h2>";
-                foreach ($livro as $titulo => $quant) {
+                foreach ($livros as $titulo => $quant) {
                     echo "<p>Titulo: $titulo - Quantidade: $quant</p>";
                 }
             } catch (Exception $e) {
